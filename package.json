@@ -1,0 +1,29 @@
+{
+  "name": "aes-nodejs",
+  "version": "1.0.0",
+  "description": "AES-NODE.JS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server"
+  },
+  "author": "Alejandro Silva Juárez",
+  "license": "MIT",
+  "dependencies": {
+    "aes-128-cbc": "^1.0.3",
+    "aes-cbc-hmac-sha2": "^0.4.0",
+    "aes-js": "^3.1.2",
+    "bcryptjs": "^2.4.3",
+    "crypto": "^1.0.1",
+    "crypto-aes192": "^1.0.3",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-validation": "^3.0.8",
+    "express-validator": "^6.13.0",
+    "multer": "^1.4.3"
+  },
+  "devDependencies": {
+    "concurrently": "^6.3.0",
+    "nodemon": "^2.0.13"
+  }
+}

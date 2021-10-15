@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <title>Express validator</title>
+  <style>
+    body {
+      align-items: center;
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-success">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Volver al inicio</a>
+        <a class="navbar-brand" href="/cifrar">Ir a Criptar</a>
+      </div>
+    </nav>
+    
+    <br>
+    <br>
+  <div class="container">
+    <h1>DESENCRIPTA AES y BCRYPT EN NODE!</h1>
+    <form action="/descifrar" method="POST">
+      <div class="mb-3">
+                <label for="file" class="form-label">Ingrese contraseña (CASO DE BCRYPT)</label>
+                  <input id="nya" name="nya" type="text" class="form-control"
+                    value="<% if(typeof newValores != 'undefined') { %><%= newValores.nya %><%}%>"
+                    placeholder="Ingrese la contraseña hecha por BCRYPT" 
+                    maxlength="32">
+                    </div>
+        <div class="mb-3">
+        <label for="file" class="form-label">Ingrese archivo a descifrar (LOS ARCHIVOS "BCRYPT-" SON PARA DESCRIPTAR ARCHIVOS BCRYPT) </label>
+        <input type="file" id="file" name="file" class="form-control">
+      </div>
+        <div class="mb-3">
+
+          <label for="text" class="form-label">Ingrese contraseña (AES-CBC incluye todos los tipos de cifrado AES)</label>
+          <input id="text" name="text" type="text" class="form-control"
+            value="<% if(typeof newValores != 'undefined') { %><%= newValores.text %><%}%>"
+            placeholder="PD: Bcrypt no necesita contraseña, ponga texto aleatorio para quitar la validacion" minlength="16"
+            maxlength="32">
+        </div>
+        
+        <div class="mb-3">
+            <div class="form-floating">
+        <select name="type" class="form-select" id="floatingSelect" aria-label="Floating label select example" required>
+                              <option  selected="true" value='' disabled hidden >
+                                 Ingrese el tipo de cifrado.
+                              </option>
+            <option value="AES" id="AES">AES-CBC</option>
+            <option value="bcrypt" id="bcrypt">BCRYPT-JS(EXTRA)</option>
+          </select>
+                  <label for="floatingSelect">Seleccione el cifrado que quiera</label>
+                  </div>
+        </div>
+        <br>
+        <button type="submit" i class="btn btn-primary">Descriptar</button>
+        </form>
+
+
+        <%if(typeof newValores !='undefined' ) {%>
+<br>
+<br>
+          <div class="container mx-auto">
+          <textarea class="form-control" style="height: 100px">
+
+        
+                <%= newValores.decrypted%>
+        
+          
+        
+              </textarea>
+        
+              <% if(newValores.decrypted !== 'Incorrecto! Intente denuevo') { %>
+                <br>
+                <br>
+                <b>
+              <a href="/descifrar/descargar/<%= newValores.filename%>" class="pe-auto">Descargar texto</a>
+                
+                </b>
+      
+              
+                <%}%>
+
+          <%}%>
+
+    <!-- Toasts -->
+    <!-- TOASTS -->
+    <% if(typeof validaciones !='undefined' ) { %>
+      <% validaciones.forEach( (validacion)=> { %>
+        <div class="toast-container">
+          <div class="toast" role="alert" aria-live="assertive" data-bs-autohide="false">
+            <div class="toast-header">
+              <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <rect width="100%" height="100%" fill="#007aff"></rect>
+              </svg>
+              <strong class="me-auto">¡Atención!</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              <strong>
+                <%= validacion.msg %>
+              </strong>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+          <% }else{ %>
+      <div class="text-muted">
+        <br>
+        <br>
+        Mensaje: <% if(typeof newValores !='undefined' ) { %>
+          <%= newValores.decrypted %>
+            <%}%>
+            <br>
+            <br>
+          Contraseña: <% if(typeof newValores !='undefined' ) { %>
+            <%= newValores.text %>
+              <%}%>
+
+          
+      </div>
+        </div>
+
+            <%}%>
+            <!-- Alerts -->
+            <!-- <% if(typeof validaciones != 'undefined') { %>
+            <% validaciones.forEach( (validacion) => {  %> 
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong><%= validacion.msg %></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% }) %>
+          <% } %> -->
+  </div>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+      var toastList = toastElList.map(function (toastEl) {
+        return new bootstrap.Toast(toastEl)
+      });
+      toastList.forEach(toast => toast.show());
+    });
+  </script>
+</body>
+
+</html>
